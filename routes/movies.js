@@ -21,7 +21,6 @@ class MoviesRoutes {
     this.router.patch("/:id", this.#moviesController.edit);
 
     this.router.delete("/:id", this.#moviesController.deleteMovie);
-    this
   }
 }
 
