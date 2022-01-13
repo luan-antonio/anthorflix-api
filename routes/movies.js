@@ -1,4 +1,5 @@
 const express = require("express");
+const checkToken = require('../checkToken');
 const MoviesController = require("../controllers/movies");
 
 class MoviesRoutes {
@@ -14,13 +15,13 @@ class MoviesRoutes {
     this.router.get("/", this.#moviesController.get);
     this.router.get("/:id", this.#moviesController.getById);
 
-    this.router.post("/add", this.#moviesController.add);
-    this.router.post("/:id/ratings", this.#moviesController.addRating);
-    this.router.post("/:id/ratings/:ratingId/comments", this.#moviesController.addComment);
+    this.router.post("/add", checkToken, this.#moviesController.add);
+    this.router.post("/:id/ratings", checkToken, this.#moviesController.addRating);
+    this.router.post("/:id/ratings/:ratingId/comments", checkToken, this.#moviesController.addComment);
 
-    this.router.patch("/:id", this.#moviesController.edit);
+    this.router.patch("/:id", checkToken, this.#moviesController.edit);
 
-    this.router.delete("/:id", this.#moviesController.deleteMovie);
+    this.router.delete("/:id", checkToken, this.#moviesController.deleteMovie);
   }
 }
 
