@@ -1,5 +1,6 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
+const cors = require('cors');
 const mongoose = require("mongoose");
 const AuthRoutes = require("./routes/auth");
 const MoviesRoutes = require("./routes/movies");
@@ -9,7 +10,7 @@ class Server {
   constructor(port, dbUser, dbPass) {
     this.app = express();
     this.app.use(express.json());
-
+    this.app.use(cors());
     this.app.use("/auth", new AuthRoutes().router);
     this.app.use("/movies", this.#checkToken, new MoviesRoutes().router);
     this.app.use("/users", this.#checkToken, new UsersRoutes().router);
