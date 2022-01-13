@@ -6,11 +6,18 @@ class AuthController {
   async register(req, res) {
     const { name, email, password, confirmPassword } = req.body;
 
+    const emailRegExp = new RegExp(
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+    );
+
     if (!name) {
       return res.status(400).json({ msg: "O nome é obrigatório" });
     }
     if (!email) {
       return res.status(400).json({ msg: "O email é obrigatório" });
+    }
+    if (!emailRegExp.test(email)) {
+      return res.status(400).json({ msg: "O email não é válido" });
     }
     if (!password) {
       return res.status(400).json({ msg: "A senha é obrigatória" });
@@ -53,6 +60,14 @@ class AuthController {
 
   async login(req, res) {
     const { email, password } = req.body;
+
+    const emailRegExp = new RegExp(
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+    );
+
+    if (!emailRegExp.test(email)) {
+      return res.status(400).json({ msg: "O email não é válido" });
+    }
 
     if (!email) {
       return res.status(400).json({ msg: "O email é obrigatório" });
